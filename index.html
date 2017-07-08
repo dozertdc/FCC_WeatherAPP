@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+
+		 function initGeolocation(){
+	        if( navigator.geolocation ){
+	           // Call getCurrentPosition with success and failure callbacks
+	           navigator.geolocation.getCurrentPosition( success, fail );
+	        }
+	        else{
+	           alert("Sorry, your browser does not support geolocation services.");
+	        }
+	     }
+
+	     function success(position){
+	     	console.log(position.coords.latitude + "," + position.coords.longitude);
+
+
+			var xmlhttp = new XMLHttpRequest();
+			var url = "http://api.openweathermap.org/data/2.5/forecast?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&APPID=4c51b29b1a2de2dca576a536a7bc41d3";
+			
+
+			xmlhttp.onreadystatechange = function() {
+			    if (this.readyState == 4 && this.status == 200) {
+			        var data = JSON.parse(this.responseText);
+			        alert(data.list[0].weather[0].main);
+			    }
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+	         
+	     }
+
+	     function fail(){
+	        // Could not obtain location
+	     }
+
+	     
+		
+	</script>
+</head>
+<body>
+
+	<button onClick="initGeolocation();">get weather</button>
+
+</body>
+</html>

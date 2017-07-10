@@ -2,61 +2,24 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="./style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-
-		 function initGeolocation(){
-	        if( navigator.geolocation ){
-	           // Call getCurrentPosition with success and failure callbacks
-	           navigator.geolocation.getCurrentPosition( success, fail );
-	        }
-	        else{
-	           alert("Sorry, your browser does not support geolocation services.");
-	        }
-	     }
-
-	     function success(position){
-
-			var xmlhttp = new XMLHttpRequest();
-			var url = "http://api.openweathermap.org/data/2.5/forecast?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&APPID=4c51b29b1a2de2dca576a536a7bc41d3";
-			
-
-			xmlhttp.onreadystatechange = function() {
-			    if (this.readyState == 4 && this.status == 200) {
-			        var data = JSON.parse(this.responseText);
-			        var kelvin = data.list[0].main.temp;
-			        var fh = Math.round(kelvin*(9/5)-459.67);
-			        document.getElementById('fh').innerHTML = fh + " Fahrenheit";
-			        var cel = Math.round(kelvin-273);
-			        document.getElementById('cel').innerHTML = cel;
-			        var city = data.city.name;
-			        document.getElementById('city').innerHTML = city;
-			        var type = data.list[0].weather[0].main;
-			        document.getElementById('type').innerHTML = type;
-			    }
-			};
-			xmlhttp.open("GET", url, true);
-			xmlhttp.send();
-	         
-	     }
-
-	     function fail(){
-	        // Could not obtain location
-	     }
-
-	     
-		
-	</script>
+	<script src="./script.js"></script>
 </head>
 <body>
-
-	<button onClick="initGeolocation();">get weather</button>
-	<ul>
-		<li id="city"></li>
-		<li id="fh"></li>
-		<li id="cel"></li>
-		<li id="type"></li>
-	</ul>
-
+	<div class="row">
+		<div id="weather-info" class="col-md-6">
+			<h1 id="city"></h1>
+			<p id="img"></p>
+			<p id="temp"></p>
+			<p id="type"></p>
+		</div>
+		<div class="col-md-6">
+			<div id="image">
+				<img src="./rhodeisland.jpg" alt="Rhode Island"/>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
